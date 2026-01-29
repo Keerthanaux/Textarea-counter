@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Textarea with Character Counter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+  }
+
+  .container {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    width: 400px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: none;
+    outline: none;
+  }
+
+  .counter {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .warning {
+    color: #ff4d4d;
+    font-size: 14px;
+    display: none;
+    margin-top: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Type Your Message</h2>
+  <textarea id="message" rows="6" placeholder="Type your message..."></textarea>
+  <div class="counter" id="counter">0/200 characters → 0 typed, 200 remaining</div>
+  <div class="warning" id="warning">You have reached the maximum character limit!</div>
+</div>
+
+<script>
+const textarea = document.getElementById('message');
+const counter = document.getElementById('counter');
+const warning = document.getElementById('warning');
+const maxChars = 200;
+
+textarea.addEventListener('input', () => {
+  let text = textarea.value;
+
+  // Prevent typing beyond maxChars
+  if (text.length > maxChars) {
+    textarea.value = text.substring(0, maxChars);
+    warning.style.display = 'block';
+  } else {
+    warning.style.display = 'none';
+  }
+
+  const charsTyped = textarea.value.length;
+  const charsRemaining = maxChars - charsTyped;
+
+  // Update counter with typed and remaining characters
+  counter.textContent = `${charsTyped}/${maxChars} characters → ${charsTyped} typed, ${charsRemaining} remaining`;
+});
+</script>
+
+</body>
+</html>
